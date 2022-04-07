@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+
 import 'package:geolocator/geolocator.dart' as geolocator;
 import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
@@ -17,9 +18,25 @@ class LocationProvider extends ChangeNotifier {
 
   double _distanceDelta = 2.0;
 
+  //util method to check permission
+  Future<void> checkPermission() async{
+    final PermissionStatus status = await _location.hasPermission();
+    if(status == PermissionStatus.granted) {
+      startLocationListener();
+    }
+    else {
+      final PermissionStatus newStatus = await _location.requestPermission();
+      if(newStatus == PermissionStatus.granted) {
+        startLocationListener();
+      }
+    }
+  }
+
   Future<void> startLocationListener() async{
     trackingInProgress = true;
     _lastLocation = null;
+
+
 
     await _location.changeSettings(
       accuracy: LocationAccuracy.high,

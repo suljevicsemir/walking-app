@@ -121,7 +121,7 @@ class _PageFloatingButton extends StatelessWidget {
     ) :
     ElevatedButton(
       onPressed: () {
-          context.read<LocationProvider>().startLocationListener();
+          context.read<LocationProvider>().checkPermission();
       },
       child: Text("Start location listener")
     );
