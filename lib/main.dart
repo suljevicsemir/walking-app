@@ -50,6 +50,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    //attachListener();
+  }
+
+  void attachListener() {
+    if(scrollController.hasClients) {
+      scrollController.addListener(() {
+        scrollController.jumpTo(scrollController.position.maxScrollExtent);
+      });
+    }
+    else {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        attachListener();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<LocationProvider>();
@@ -78,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
               ],
             ),
-            const SizedBox(height: 100,),
+            const SizedBox(height: 40,),
             const Center(
               child: Text(
                 "Traveled distance",
@@ -87,11 +109,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(height: 10,),
             Text(
               "${provider.distanceTraveled} m",
               style: const TextStyle(
                 fontSize: 40
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                controller: scrollController,
+                itemCount: provider.accuracyList.length,
+                itemBuilder: (ctx, index) => AccuracyListItem(model: provider.accuracyList[index])
               ),
             )
           ],
@@ -100,6 +129,48 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class AccuracyListItem extends StatelessWidget {
+  const AccuracyListItem({Key? key, required this.model}) : super(key: key);
+
+  final LocationAccuracyModel model;
+
+  bool get accurate {
+    return model.horizontalAccuracy != null && model.horizontalAccuracy! <= 11;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: accurate ? BoxDecoration() : BoxDecoration(
+        color: Colors.red
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  "Horizontal accuracy: ${model.horizontalConvert}"
+              ),
+              const SizedBox(height: 5,),
+              Text(
+                  "Vertical accuracy: ${model.verticalConvert}"
+              ),
+              const SizedBox(height: 5,),
+            ],
+          ),
+          const SizedBox(width: 15,),
+          Text(
+            "Distance: ${model.distance.toStringAsFixed(2)}"
+          )
+        ],
+      ),
+    );
+  }
+}
+
 
 class _PageFloatingButton extends StatelessWidget {
   const _PageFloatingButton({
