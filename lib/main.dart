@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:walking_app/location_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:walking_app/pedometer.dart';
+import 'package:walking_app/pedometer_provider.dart';
 
 
 
@@ -20,7 +22,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<LocationProvider>(
           create: (_) => LocationProvider(),
           lazy: false,
-        )
+        ),
+        ChangeNotifierProvider<PedometerProvider>(
+          create: (_) => PedometerProvider(),
+          lazy: false,
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -36,7 +42,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(),
+        home: const PedometerPage(),
       ),
     );
   }

@@ -10,6 +10,7 @@
           <set>
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/geolocator_android-3.1.4/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/location-4.3.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/pedometer-3.0.0/android" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>
