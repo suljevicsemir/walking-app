@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 10,),
             Text(
-              "${provider.distanceTraveled} m",
+              "${provider.distanceTraveled.toStringAsFixed(4)} m",
               style: const TextStyle(
                 fontSize: 40
               ),

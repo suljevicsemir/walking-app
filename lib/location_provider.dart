@@ -142,6 +142,17 @@ class LocationProvider extends ChangeNotifier {
     }
   }
 
+
+  //prve 4 odbacit
+
+  // pratit svako 10 metara
+
+  // odbacat male i velke
+  // odbacat pogresan accuracy i velike distance
+
+  int k = 1;
+
+
   Future<void> startLocationListener() async{
     trackingInProgress = true;
     _lastLocation = null;
@@ -150,28 +161,37 @@ class LocationProvider extends ChangeNotifier {
 
     await _location.changeSettings(
       accuracy: LocationAccuracy.high,
-      interval: 2000,
-      distanceFilter: 0
+      interval: 1000,
+      distanceFilter: 1
     );
 
     listener = _location.onLocationChanged.listen((LocationData locationData) {
       // debugPrint("Location changed!");
-      // debugPrint("Current latitude: ${locationData.latitude}");      // debugPrint("Current longitude: ${locationData.longitude}");
-
+      // debugPrint("Current latitude: ${locationData.latitude}");
+      // debugPrint("Current longitude: ${locationData.longitude}")„
       _lastLocation ??= locationData;
+
+
 
       final double newDistance = geolocator.Geolocator.distanceBetween(locationData.latitude!, locationData.longitude!, _lastLocation!.latitude!, _lastLocation!.longitude!);
 
       accuracyList.add(LocationAccuracyModel(verticalAccuracy: locationData.verticalAccuracy, horizontalAccuracy: locationData.accuracy, distance: newDistance));
       notifyListeners();
 
+      //locationData.accuracy != null && locationData.accuracy! <= 11 && locationData.accuracy! >= 0
+
       //adding to total distance if horizontal accuracy is less or equal to 11
-      if(locationData.accuracy != null && locationData.accuracy! <= 11 && locationData.accuracy! >= 0) {
+      if(newDistance < 3) {
         distanceTraveled = distanceTraveled + newDistance;
       }
+      k++;
+
 
 
       _lastLocation = locationData;
+
+
+
     });
   }
 
