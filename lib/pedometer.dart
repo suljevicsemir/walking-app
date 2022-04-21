@@ -28,7 +28,6 @@ class _PedometerPageState extends State<PedometerPage> {
 
   void onStepCount(StepCount event) {
     debugPrint(event.toString());
-
     if (isInitial) {
       initialSteps = event.steps;
       steps = '0';
