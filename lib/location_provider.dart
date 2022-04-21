@@ -29,102 +29,18 @@ class LocationProvider extends ChangeNotifier {
 
   final Location _location = Location();
   LocationData? _lastLocation;
-  bool _isFirstRun = true;
+
   late StreamSubscription listener;
   bool _trackingInProgress = false;
   double _distanceTraveled = 0.0;
 
-  double _distanceDelta = 1.0;
+
+
 
   double? _horizontalAccuracy;
   double? _verticalAccuracy;
 
-  final List<LocationAccuracyModel> accuracyList = [
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-    // LocationAccuracyModel(verticalAccuracy: 20, horizontalAccuracy: 20, distance: 15),
-  ];
+  final List<LocationAccuracyModel> accuracyList = [];
 
 
 
@@ -152,46 +68,49 @@ class LocationProvider extends ChangeNotifier {
 
   int k = 1;
 
+  int _interval = 1000;
+  double _distanceFilter = 2;
+
+
+  double get distanceFilter => _distanceFilter;
+  int get interval => _interval;
+
+
+  set interval(int value) {
+    _interval = value;
+    notifyListeners();
+  }
+
+  set distanceFilter(double value) {
+    _distanceFilter = value;
+    notifyListeners();
+  }
 
   Future<void> startLocationListener() async{
     trackingInProgress = true;
     _lastLocation = null;
 
-
-
     await _location.changeSettings(
       accuracy: LocationAccuracy.high,
-      interval: 1000,
-      distanceFilter: 1
+      interval: _interval,
+      distanceFilter: _distanceFilter
     );
 
     listener = _location.onLocationChanged.listen((LocationData locationData) {
-      // debugPrint("Location changed!");
-      // debugPrint("Current latitude: ${locationData.latitude}");
-      // debugPrint("Current longitude: ${locationData.longitude}")„
       _lastLocation ??= locationData;
-
-
 
       final double newDistance = geolocator.Geolocator.distanceBetween(locationData.latitude!, locationData.longitude!, _lastLocation!.latitude!, _lastLocation!.longitude!);
 
       accuracyList.add(LocationAccuracyModel(verticalAccuracy: locationData.verticalAccuracy, horizontalAccuracy: locationData.accuracy, distance: newDistance));
       notifyListeners();
 
-      //locationData.accuracy != null && locationData.accuracy! <= 11 && locationData.accuracy! >= 0
 
-      //adding to total distance if horizontal accuracy is less or equal to 11
-      if(newDistance < 3) {
-        distanceTraveled = distanceTraveled + newDistance;
+
+      if(k > 4 && locationData.accuracy != null && locationData.accuracy! <= 14 && locationData.accuracy! >= 0 && newDistance > 1 && newDistance < 20) {
+        distanceTraveled += newDistance;
       }
       k++;
-
-
-
       _lastLocation = locationData;
-
-
-
     });
   }
 
@@ -199,16 +118,6 @@ class LocationProvider extends ChangeNotifier {
     trackingInProgress = false;
     listener.cancel();
   }
-
-  void increaseDelta() {
-    _distanceDelta += 0.1;
-  }
-
-  void decreaseDelta() {
-    _distanceDelta -= 0.1;
-  }
-
-  double get distanceDelta => _distanceDelta;
 
   set trackingInProgress(bool value) {
     _trackingInProgress = value;
@@ -239,11 +148,25 @@ class LocationProvider extends ChangeNotifier {
 
   double? get verticalAccuracy => _verticalAccuracy;
 
+  void incrementInterval() {
+    _interval += 1000;
+    notifyListeners();
+  }
 
+  void decrementInterval() {
+    _interval -= 1000;
+    notifyListeners();
+  }
 
+  void incrementDistanceFilter() {
+    _distanceFilter += 1;
+    notifyListeners();
+  }
 
-
-
+  void decrementDistanceFilter() {
+    _distanceFilter -= 1;
+    notifyListeners();
+  }
 
 
 }

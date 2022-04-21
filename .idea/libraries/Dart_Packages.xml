@@ -282,13 +282,6 @@
             </list>
           </value>
         </entry>
-        <entry key="walking_app">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../lib" />
-            </list>
-          </value>
-        </entry>
       </option>
     </properties>
     <CLASSES>
@@ -328,7 +321,6 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.8/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.1/lib" />
-      <root url="file://$PROJECT_DIR$/../lib" />
       <root url="file://$USER_HOME$/tools/flutter/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$USER_HOME$/tools/flutter/packages/flutter/lib" />
       <root url="file://$USER_HOME$/tools/flutter/packages/flutter_test/lib" />

@@ -75,30 +75,57 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<LocationProvider>();
+
     return Scaffold(
       floatingActionButton: _PageFloatingButton(isTracking: provider.trackingInProgress,),
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                Text(
-                  "Current tracked delta: ${provider.distanceDelta}"
-                ),
-                Spacer(),
-                IconButton(
-                  onPressed: () {
-                    provider.increaseDelta();
-                  },
-                  icon: Icon(Icons.add),
-                ),
-                IconButton(
-                  onPressed: () {
-
-                  },
-                  icon: Icon(Icons.remove),
-                )
-              ],
+            Text(
+              "Changing parameters during testing may lead to inconsistent data",
+              style: TextStyle(
+                color: Colors.red
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Row(
+                children: [
+                  Text(
+                      "Current tracked delta: ${provider.distanceFilter}"
+                  ),
+                  IconButton(
+                    onPressed: () => provider.incrementDistanceFilter(),
+                    icon: const Icon(Icons.add, size: 16,),
+                    splashRadius: 20,
+                  ),
+                  IconButton(
+                    onPressed: () => provider.decrementDistanceFilter(),
+                    icon: const Icon(Icons.remove, size: 16,),
+                    splashRadius: 20,
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Row(
+                children: [
+                  Text(
+                      "Current tracked interval: ${provider.interval}"
+                  ),
+                  IconButton(
+                    onPressed: () => provider.incrementInterval(),
+                    icon: const Icon(Icons.add, size: 16,),
+                    splashRadius: 20,
+                  ),
+                  IconButton(
+                    onPressed: () => provider.decrementInterval(),
+                    icon: const Icon(Icons.remove, size: 16,),
+                    splashRadius: 20,
+                  )
+                ],
+              ),
             ),
             const SizedBox(height: 40,),
             const Center(
@@ -136,15 +163,13 @@ class AccuracyListItem extends StatelessWidget {
   final LocationAccuracyModel model;
 
   bool get accurate {
-    return model.horizontalAccuracy != null && model.horizontalAccuracy! <= 11;
+    return model.horizontalAccuracy != null && model.horizontalAccuracy! <= 14;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: accurate ? BoxDecoration() : BoxDecoration(
-        color: Colors.red
-      ),
+      decoration: accurate ? const BoxDecoration() : const BoxDecoration(color: Colors.red),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
